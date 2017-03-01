@@ -17,7 +17,7 @@ LDFLAGS = \
 ifeq ($(strip $(PROFILE)),1)
 PROF_FLAGS = -pg
 CFLAGS += $(PROF_FLAGS)
-LDFLAGS += $(PROF_FLAGS) 
+LDFLAGS += $(PROF_FLAGS)
 endif
 
 OBJS := \
@@ -47,6 +47,10 @@ use-models.h: models.inc Makefile
 check: $(EXEC)
 	@./$(EXEC) && diff -u baseline.ppm out.ppm || (echo Fail; exit)
 	@echo "Verified OK"
+
+plot:
+	gnuplot scripts/runtime.gp
+	eog runtime.png
 
 clean:
 	$(RM) $(EXEC) $(OBJS) use-models.h \
